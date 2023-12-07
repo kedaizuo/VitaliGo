@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "899595268805",
+    "firebase_url": "https://vitaligo-b3d8b-default-rtdb.firebaseio.com",
+    "project_id": "vitaligo-b3d8b",
+    "storage_bucket": "vitaligo-b3d8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899595268805:android:849a9a7b81eea842d3f6ac",
+        "android_client_info": {
+          "package_name": "com.androidapp.vitaligo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDej782PjByySQZQESxSv5TH_Cjfjv-dUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899595268805:android:7a586483560fe1d8d3f6ac",
+        "android_client_info": {
+          "package_name": "com.example.firebasedemoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDej782PjByySQZQESxSv5TH_Cjfjv-dUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:899595268805:android:cdce0731c4fa43ccd3f6ac",
+        "android_client_info": {
+          "package_name": "com.example.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDej782PjByySQZQESxSv5TH_Cjfjv-dUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

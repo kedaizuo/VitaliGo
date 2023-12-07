@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/appToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#A9A9A9"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:title="VitaliGO">
+        <!-- Button 1 -->
+        <ImageButton
+            android:id="@+id/centerButton"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:src="@drawable/locationtag"
+            android:scaleType="centerInside"
+            android:layout_gravity="end"
+            android:layout_marginEnd="4dp"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.androidapp.vitaligo.MapsActivity" />
+
+    <RelativeLayout
+        android:id="@+id/bottomNavContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:background="#A9A9A9">
+
+        <LinearLayout
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <ImageButton
+                android:id="@+id/btnNav1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/button_rounded"
+                android:src="@drawable/runtag"
+                android:scaleType="fitCenter"
+                android:padding="10dp" />
+
+            <ImageButton
+                android:id="@+id/btnNav2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/button_rounded"
+                android:src="@drawable/historytag"
+                android:scaleType="fitCenter"
+                android:padding="10dp" />
+            <ImageButton
+                android:id="@+id/btnNav3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/button_rounded"
+                android:src="@drawable/communitytag"
+                android:scaleType="fitCenter"
+                android:padding="10dp" />
+            <ImageButton
+                android:id="@+id/btnNav4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/button_rounded"
+                android:src="@drawable/usertag"
+                android:scaleType="fitCenter"
+                android:padding="10dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
+
