@@ -25,6 +25,39 @@
             android:layout_marginEnd="4dp"/>
 
     </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:id="@+id/inputBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_below="@id/appToolbar">
+
+
+        <EditText
+            android:id="@+id/targetDistance"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Goal"
+            android:inputType="numberDecimal"/>
+
+
+        <TextView
+            android:id="@+id/distanceRan"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0.0 km"
+            android:gravity="center"/>
+
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"/>
+    </LinearLayout>
 
     <fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,6 +67,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/inputBar"
         tools:context="com.androidapp.vitaligo.MapsActivity" />
 
     <RelativeLayout
