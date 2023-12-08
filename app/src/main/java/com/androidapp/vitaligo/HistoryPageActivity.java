@@ -31,6 +31,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +44,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class HistoryPageActivity extends AppCompatActivity {
@@ -106,6 +110,8 @@ public class HistoryPageActivity extends AppCompatActivity {
             }
         });
         retriveData();
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
     }
     public void showInputDialog(){
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
@@ -163,7 +169,7 @@ public class HistoryPageActivity extends AppCompatActivity {
         listView =  findViewById(R.id.listView);
 
         histroyList = new ArrayList<>();
-        adapter = new HistoryDataAdapter(this, histroyList);
+        adapter = new HistoryDataAdapter(this, histroyList, getSupportFragmentManager());
         listView.setAdapter(adapter);
         String userEmail = currentUser.getEmail();
         String validEmail = userEmail.replace(".", ",");
@@ -174,13 +180,21 @@ public class HistoryPageActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 histroyList.clear();
+                Log.d("data", "first level size = "+dataSnapshot.getChildrenCount());
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     String key = snapshot.getKey();
-                    String title = snapshot.child("Title").getValue(String.class);
-                    String content = snapshot.child("Content").getValue(String.class);
-                    HistoryData historyData = new HistoryData(title, content);
+                    String title = snapshot.child("title").getValue(String.class);
+                    String content = snapshot.child("content").getValue(String.class);
+                    List<LatLng> pathPointsList = new ArrayList<>();
+                    for(DataSnapshot latlng: snapshot.child("pathPoints").getChildren()){
+                        Map<String, Double> pathPoint = (Map<String, Double>) latlng.getValue();
+                        LatLng point = new LatLng(pathPoint.get("latitude"), pathPoint.get("longitude"));
+                        pathPointsList.add(point);
+                    }
+                    HistoryData historyData = new HistoryData(title, content, pathPointsList);
                     Log.d("data", "email = "+validEmail);
-                    Log.d("data", historyData.getTitle());
+                    //Log.d("data", historyData.getTitle());
+                    //Log.d("data", historyData.getPathPointsList().size()+"");
                     histroyList.add(historyData);
                 }
                 adapter.notifyDataSetChanged();

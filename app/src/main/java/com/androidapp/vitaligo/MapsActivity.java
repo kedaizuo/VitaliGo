@@ -46,14 +46,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.util.Calendar;
 
 
 public class MapsActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
@@ -143,7 +148,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity.this, CommunityPageActivity.class);
-                clearPathPast();
+
                 Log.d("AAA", "BBB");
                 startActivity(intent);
             }
@@ -244,6 +249,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
     }
 
     private void clearPathPast() {
+        saveDataToDatabase();
         if (pathPast != null) {
             pathPast.remove();
             pathPast = null;
@@ -251,6 +257,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
         pathPointsList.clear();
         recordStarted = false;
         setViewStatus();
+
 //        meterPathPast = 0;
 //        indexCaculatedInPathPastList = 0;
 //        startButton.setText("start");
@@ -297,6 +304,45 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
         setViewStatus();
         //Log.d("path", ""+(pathPointsList==null));
 
+    }
+    public void saveDataToDatabase(){
+        if(meterPathPast<=0.01){
+            Toast.makeText(MapsActivity.this, "This running is too short, and can't be saved.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String userEmail = currentUser.getEmail();
+        String validEmail = userEmail.replace(".", ",");
+        DatabaseReference recordRef = FirebaseDatabase.getInstance().getReference()
+                .child("VitaliGo")
+                .child(validEmail)
+                .child("HistoryData")
+                .push();
+
+        List<Map<String, Double>> latLngList = new ArrayList<>();
+        for (LatLng latLng : pathPointsList) {
+            Map<String, Double> latLngMap = new HashMap<>();
+            latLngMap.put("latitude", latLng.latitude);
+            latLngMap.put("longitude", latLng.longitude);
+            latLngList.add(latLngMap);
+        }
+
+
+        Calendar calendar = Calendar.getInstance();
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // 月份是从 0 开始的，所以需要加 1
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY); // 24小时制
+        int minute = calendar.get(Calendar.MINUTE);
+
+
+        String date = hour+":"+minute+" on "+month+"/"+day+"/"+year;
+
+        recordRef.child("title").setValue("Finished at "+date);
+        recordRef.child("content").setValue(Float.toString(meterPathPast/1000));
+        recordRef.child("pathPoints").setValue(latLngList)
+                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show());
     }
     private void setViewStatus(){
         SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferenceName, MODE_PRIVATE);
