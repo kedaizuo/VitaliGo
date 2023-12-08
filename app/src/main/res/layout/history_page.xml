@@ -40,7 +40,8 @@
         android:layout_above="@id/bottomNavContainer"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_dialog_email"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/bottomNavContainer"

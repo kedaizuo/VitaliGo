@@ -96,72 +96,72 @@ public class HistoryPageActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(currentUser!=null){
-                    showInputDialog();
-                }
-                else{
-                    Toast.makeText(HistoryPageActivity.this, "Login first", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(currentUser!=null){
+//                    showInputDialog();
+//                }
+//                else{
+//                    Toast.makeText(HistoryPageActivity.this, "Login first", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        });
         retriveData();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
     }
-    public void showInputDialog(){
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-        builder.setTitle("Add history");
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.history_dialog, null);
-        builder.setView(dialogView);
-        final EditText editTextTitle = dialogView.findViewById(R.id.editTextTitle);
-        final EditText editTextContent = dialogView.findViewById(R.id.editTextContent);
-
-
-
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                storeData(editTextTitle.getText().toString(), editTextContent.getText().toString());
-                dialog.dismiss();
-            }
-
-        }).setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-    public void storeData(String title, String content){
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("Title", title);
-        map.put("Content", content);
-
-        Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show();
-
-        String userEmail = currentUser.getEmail();
-        String validEmail = userEmail.replace(".", ",");
-        DatabaseReference recordRef = FirebaseDatabase.getInstance().getReference()
-                .child("VitaliGo")
-                .child(validEmail)
-                .child("HistoryData")
-                .push();
-
-        recordRef.setValue(map)
-                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show());
-    }
+//    public void showInputDialog(){
+//        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+//        builder.setTitle("Add history");
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        View dialogView = inflater.inflate(R.layout.history_dialog, null);
+//        builder.setView(dialogView);
+//        final EditText editTextTitle = dialogView.findViewById(R.id.editTextTitle);
+//        final EditText editTextContent = dialogView.findViewById(R.id.editTextContent);
+//
+//
+//
+//
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                storeData(editTextTitle.getText().toString(), editTextContent.getText().toString());
+//                dialog.dismiss();
+//            }
+//
+//        }).setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+//
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+//    }
+//    public void storeData(String title, String content){
+//        HashMap<String, Object> map = new HashMap<>();
+//        map.put("Title", title);
+//        map.put("Content", content);
+//
+//        Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show();
+//
+//        String userEmail = currentUser.getEmail();
+//        String validEmail = userEmail.replace(".", ",");
+//        DatabaseReference recordRef = FirebaseDatabase.getInstance().getReference()
+//                .child("VitaliGo")
+//                .child(validEmail)
+//                .child("HistoryData")
+//                .push();
+//
+//        recordRef.setValue(map)
+//                .addOnSuccessListener(aVoid -> Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show())
+//                .addOnFailureListener(e -> Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show());
+//    }
     public void retriveData(){
         if(currentUser == null){
             return;
