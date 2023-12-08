@@ -143,6 +143,7 @@ public class HistoryPageActivity extends AppCompatActivity {
         map.put("Content", content);
 
         Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show();
+
         String userEmail = currentUser.getEmail();
         String validEmail = userEmail.replace(".", ",");
         DatabaseReference recordRef = FirebaseDatabase.getInstance().getReference()
@@ -156,6 +157,9 @@ public class HistoryPageActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show());
     }
     public void retriveData(){
+        if(currentUser == null){
+            return;
+        }
         listView =  findViewById(R.id.listView);
 
         histroyList = new ArrayList<>();
