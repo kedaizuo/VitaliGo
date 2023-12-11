@@ -13,26 +13,18 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="History">
+        app:title="Your Posts">
 
     </androidx.appcompat.widget.Toolbar>
 
-
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/lvCommunityData"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/appToolbar"
-         />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottomNavContainer"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        android:visibility="gone"/>
+        android:layout_below="@id/appToolbar"/>
+
+
 
     <RelativeLayout
         android:id="@+id/bottomNavContainer"
@@ -94,8 +86,8 @@
                 android:scaleType="fitCenter"
                 android:padding="10dp" />
         </LinearLayout>
-    </RelativeLayout>
 
+    </RelativeLayout>
 
 
 

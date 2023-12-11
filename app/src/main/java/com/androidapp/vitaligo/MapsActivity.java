@@ -48,6 +48,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.google.android.gms.maps.model.Polyline;
@@ -96,6 +97,10 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
     private Button startButton;
     private boolean recordStarted = false;
     private float distanceTarget = 0;
+    private long timeStart = -1;
+    private long runningDuration = -1;
+    private TextView runningDurationView;
+    private TextView speedView;
 
 
 
@@ -127,6 +132,8 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
         distanceRanView = findViewById(R.id.distanceRan);
         distanceTargetView = findViewById(R.id.targetDistance);
         startButton = findViewById(R.id.startButton);
+        runningDurationView = findViewById(R.id.runningDuration);
+        speedView = findViewById(R.id.speed);
 
         centerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,6 +188,8 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
                     startButton.setText("End");
                     distanceTargetView.setEnabled(false);
                     distanceTarget = Float.valueOf(distanceTargetView.getText().toString());
+                    timeStart = System.currentTimeMillis();
+
 
 
                 } else {
@@ -215,6 +224,15 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
                 .position(userLocation)
                 .title("")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+        if(recordStarted){
+            updateViewStatus();
+
+        }
+        else{
+            runningDuration = -1;
+
+
+        }
         if (validatePoint(userLocation) && recordStarted) {
             drawPathPast(userLocation);
             calculateTotalDistance();
@@ -256,6 +274,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
         }
         pathPointsList.clear();
         recordStarted = false;
+        timeStart = -1;
         setViewStatus();
 
 //        meterPathPast = 0;
@@ -276,6 +295,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
         editor.putString("pathPointList", json);
         editor.putBoolean("recordStarted", recordStarted);
         editor.putFloat("distanceTarget", distanceTarget);
+        editor.putLong("timeStart", timeStart);
         editor.apply();
     }
 
@@ -288,6 +308,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
         }.getType();
         pathPointsList = gson.fromJson(json, type);
         recordStarted = sharedPreferences.getBoolean("recordStarted", false);
+        timeStart = sharedPreferences.getLong("timeStart", -1);
 //        if (recordStarted) {
 //            startButton.setText("End");
 //            distanceTargetView.setEnabled(false);
@@ -339,7 +360,19 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
         String date = hour+":"+minute+" on "+month+"/"+day+"/"+year;
 
         recordRef.child("title").setValue("Finished at "+date);
-        recordRef.child("content").setValue(Float.toString(meterPathPast/1000));
+        float distance = meterPathPast/1000;
+        recordRef.child("content").setValue(String.format(Locale.getDefault(), "%.2f", distance)+" km");
+
+        runningDuration = System.currentTimeMillis() - timeStart;
+        int seconds = (int) (runningDuration/1000);
+        int hours = seconds / 3600;
+        seconds-=hours*3600;
+        int mins = seconds/60;
+        seconds -= mins*60;
+        double speed = meterPathPast/seconds * 3.6;
+        recordRef.child("runningDuration").setValue(hours+":"+mins+":"+seconds);
+        recordRef.child("speed").setValue(String.format(Locale.getDefault(), "%.2f", speed)+" km/h");
+
         recordRef.child("pathPoints").setValue(latLngList)
                 .addOnSuccessListener(aVoid -> Toast.makeText(this, "Added successfully", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to add", Toast.LENGTH_SHORT).show());
@@ -353,15 +386,32 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
             distanceTargetView.setText(Float.toString(distanceTarget));
 
 
+
         } else {
             startButton.setText("Start");
             distanceTargetView.setEnabled(true);
             distanceTarget = 0;
-            distanceTargetView.setText("Input Goal");
+            distanceTargetView.setText("");
             meterPathPast = 0;
             indexCaculatedInPathPastList = 0;
 
         }
+    }
+    private void updateViewStatus(){
+        if(recordStarted){
+            updateDistanceRan();
+            runningDuration = System.currentTimeMillis() - timeStart;
+            int seconds = (int) (runningDuration/1000);
+            int hours = seconds / 3600;
+            seconds-=hours*3600;
+            int mins = seconds/60;
+            seconds -= mins*60;
+            runningDurationView.setText("Running time: "+hours+":"+mins+":"+seconds);
+            double speed = meterPathPast/seconds * 3.6;
+            speedView.setText("Speed: "+String.format(Locale.getDefault(), "%.2f", speed)+" km/h");
+        }
+
+
     }
     public void calculateTotalDistance() {
 
@@ -398,7 +448,7 @@ public class MapsActivity extends AppCompatActivity implements LocationListener,
     }
 
     private void updateDistanceRan() {
-        distanceRanView.setText(String.format("%.2f km", meterPathPast / 1000));
+        distanceRanView.setText("Distance covered: "+String.format("%.2f km", meterPathPast / 1000));
     }
 
     private boolean isValidFloat(String text) {

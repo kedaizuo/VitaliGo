@@ -40,6 +40,11 @@
 
         <activity android:name="com.androidapp.vitaligo.LoginActivity"></activity>
         <activity android:name="com.androidapp.vitaligo.RegisterActivity"></activity>
+        <activity android:name="com.androidapp.vitaligo.DetailActivity"></activity>
+        <activity android:name="com.androidapp.vitaligo.UserCommunityActivity"></activity>
+        <activity android:name="com.androidapp.vitaligo.UserCommunityDetailsActivity"></activity>
+        <activity android:name="com.androidapp.vitaligo.UpdateUserProfile"></activity>
+        <activity android:name="com.androidapp.vitaligo.UpdatePasswordActivity"></activity>
 
 
 

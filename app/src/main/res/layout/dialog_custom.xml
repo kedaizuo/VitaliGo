@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sharing in VitaliGo Community"
+        android:textSize="18sp"
+        android:textAlignment="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#D3D3D3"
+        android:layout_marginVertical="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Topic:"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="5dp"/>
+
+    <EditText
+        android:id="@+id/dialog_input_Topic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type your Experience"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Content:"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/dialog_input_Content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type your Experience"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="5dp"/>
+</LinearLayout>

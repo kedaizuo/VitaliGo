@@ -1,13 +1,14 @@
 package com.androidapp.vitaligo;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,11 +17,46 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private ImageButton mainpageButton;
+    private ImageButton historyButton;
+    private ImageButton communityButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        mainpageButton = findViewById(R.id.btnNav1);
+        historyButton = findViewById(R.id.btnNav2);
+        communityButton = findViewById(R.id.btnNav3);
+
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, HistoryPageActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        mainpageButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        communityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, CommunityPageActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     public void login(View view) {

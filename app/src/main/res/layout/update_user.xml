@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".UpdateUserProfile">
 
+    <!-- Toolbar at the top -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/appToolbar"
         android:layout_width="match_parent"
@@ -13,26 +15,68 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        app:title="History">
+        app:title="Update Username"/>
 
-    </androidx.appcompat.widget.Toolbar>
-
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/appToolbar"
-         />
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/bottomNavContainer"
-        android:layout_alignParentRight="true"
-        android:layout_margin="10dp"
-        app:srcCompat="@android:drawable/ic_dialog_email"
-        android:visibility="gone"/>
+        android:padding="10dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/rounded_corner"
+        android:layout_margin="20dp">
+
+        <!-- Username Title and EditText -->
+        <TextView
+            android:id="@+id/usernameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Your User Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"/>
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usernameTitle"
+            android:hint="User Name"
+            android:padding="10dp"/>
+
+
+
+        <!-- Buttons in a horizontal layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/username"
+            android:layout_marginTop="15dp">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Back"
+                android:onClick="backToUserPage"
+                android:padding="10dp"/>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="match_parent"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Update"
+                android:onClick="update"
+                android:padding="10dp"
+                android:id="@+id/update"/>
+        </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/bottomNavContainer"
@@ -94,11 +138,7 @@
                 android:scaleType="fitCenter"
                 android:padding="10dp" />
         </LinearLayout>
+
     </RelativeLayout>
 
-
-
-
-
 </RelativeLayout>
-

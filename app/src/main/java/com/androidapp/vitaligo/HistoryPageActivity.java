@@ -191,8 +191,10 @@ public class HistoryPageActivity extends AppCompatActivity {
                         LatLng point = new LatLng(pathPoint.get("latitude"), pathPoint.get("longitude"));
                         pathPointsList.add(point);
                     }
-                    HistoryData historyData = new HistoryData(title, content, pathPointsList);
-                    Log.d("data", "email = "+validEmail);
+                    String runningDuration = snapshot.child("runningDuration").getValue(String.class);
+                    String speed = snapshot.child("speed").getValue(String.class);
+                    HistoryData historyData = new HistoryData(title, content,runningDuration, speed, pathPointsList, key);
+                    //Log.d("data", "email = "+validEmail);
                     //Log.d("data", historyData.getTitle());
                     //Log.d("data", historyData.getPathPointsList().size()+"");
                     histroyList.add(historyData);
